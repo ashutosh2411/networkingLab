@@ -1,6 +1,9 @@
 from socket import *
+from threading import *
+
 HOST = "127.0.0.1"
-PORT = 1502
+PORT = 1503
+
 clientSocket = socket(AF_INET, SOCK_STREAM)
 clientSocket.connect((HOST,PORT))
 while 1 :
