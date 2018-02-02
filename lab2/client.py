@@ -1,12 +1,16 @@
 from socket import *
 import sys
 
-def main(domain_name='www.jamesbond.com',serverName='127.0.0.1'):
-	serverPort 		= 53
+def main(domain_name,serverName):
+	serverPort 		= 8090
 	clientSocket 	= socket(AF_INET, SOCK_DGRAM)
 	request 		= generateRequest(domain_name)
 	clientSocket.sendto(request, ( serverName ,serverPort) )
 	data, server 	= clientSocket.recvfrom(1024)
+	# print (data)
+	if data[3] == 131:
+		print ('Error 404! Domain name not found.')
+		return
 	ip 				= decryptResponse(data[12:] ,data[6:8]) # data[6:8] :- no. of answers
 	for i in ip:
 		print(i)
@@ -33,8 +37,8 @@ def encryptDomain(domain):
 	# domain + end + class + type
 
 def generateHeader():
-	ID 		= (512).to_bytes(2,byteorder='big')
-	FLAG 	= int('1' + '0000' + '0' + '0' + '0' + '0' + '000' + '0000', 2).to_bytes(2, byteorder = 'big')
+	ID 		= (200).to_bytes(2,byteorder='big')
+	FLAG 	= int('0' + '0000' + '0' + '0' + '1' + '0' + '000' + '0000', 2).to_bytes(2, byteorder = 'big')
 	# 		 (QR + OPCODE + AA + TC + RD + RA + Z  + RCODE)
 	QDCOUNT = (1).to_bytes(2,byteorder='big')
 	ANCOUNT = (0).to_bytes(2,byteorder='big')
@@ -70,7 +74,4 @@ def getDomain(data):
 				break
 	return data[index:]
 
-try:
-	main(sys.argv[1] , sys.argv[2]) #domain name / ip of server
-except :
-	main()	
+main(sys.argv[1] , sys.argv[2]) #domain name / ip of server
