@@ -14,3 +14,6 @@ Labs as part of Computer Networking course taught at IIT PKD.
    resolve the hostname `www.james.bond` returns the ip address
    `007.007.007.007`. Your name server should work with any program
    like `nslookup` not just your client in step 1.
+
+4. 	- Use the raw socket interface of Linux TCP/IP stack and implement a ping.
+	- Write a UDP server that responds to udp connection with a pong message. However use the IP layer to construct the UDP packet.
